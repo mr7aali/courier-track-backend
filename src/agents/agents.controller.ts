@@ -1,16 +1,37 @@
-import { Controller, Get, Post, Patch, Param, Delete, Query, UseGuards, Request } from "@nestjs/common"
-import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
-import type { AgentsService } from "./agents.service"
-import type { CreateAgentDto } from "./dto/create-agent.dto"
-import type { UpdateAgentDto } from "./dto/update-agent.dto"
-import type { UpdateLocationDto } from "./dto/update-location.dto"
-import type { PaginationDto } from "../common/dto/pagination.dto"
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
-import { RolesGuard } from "../common/guards/roles.guard"
-import { Roles, UserRole } from "../common/decorators/roles.decorator"
+// import { Controller, Get, Post, Patch, Param, Delete, Query, UseGuards, Request } from "@nestjs/common"
+// import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
+// import type { AgentsService } from "./agents.service"
+// import type { CreateAgentDto } from "./dto/create-agent.dto"
+// import type { UpdateAgentDto } from "./dto/update-agent.dto"
+// import type { UpdateLocationDto } from "./dto/update-location.dto"
+// import type { PaginationDto } from "../common/dto/pagination.dto"
+// import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
+// import { RolesGuard } from "../common/guards/roles.guard"
 
-@ApiTags("agents")
-@Controller("agents")
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { AgentsService } from './agents.service';
+import { Roles, UserRole } from 'src/common/decorators/roles.decorator';
+import { CreateAgentDto } from './dto/create-agent.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { UpdateAgentDto } from './dto/update-agent.dto';
+import { UpdateLocationDto } from './dto/update-location.dto';
+
+// import { Roles, UserRole } from "../common/decorators/roles.decorator"
+@ApiTags('agents')
+@Controller('agents')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @ApiBearerAuth()
 export class AgentsController {
@@ -18,9 +39,9 @@ export class AgentsController {
 
   @Post()
   @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: "Create a new agent" })
+  @ApiOperation({ summary: 'Create a new agent' })
   create(createAgentDto: CreateAgentDto) {
-    return this.agentsService.create(createAgentDto)
+    return this.agentsService.create(createAgentDto);
   }
 
   @Get()
@@ -37,11 +58,11 @@ export class AgentsController {
     return this.agentsService.getAvailableAgents(serviceArea);
   }
 
-  @Get("stats")
+  @Get('stats')
   @Roles(UserRole.ADMIN)
-  @ApiOperation({ summary: "Get agent statistics" })
+  @ApiOperation({ summary: 'Get agent statistics' })
   getAgentStats() {
-    return this.agentsService.getAgentStats()
+    return this.agentsService.getAgentStats();
   }
 
   @Get('profile')
@@ -57,25 +78,28 @@ export class AgentsController {
     return this.agentsService.findOne(id);
   }
 
-  @Patch(":id")
+  @Patch(':id')
   @Roles(UserRole.ADMIN, UserRole.AGENT)
-  @ApiOperation({ summary: "Update agent" })
+  @ApiOperation({ summary: 'Update agent' })
   update(@Param('id') id: string, updateAgentDto: UpdateAgentDto) {
-    return this.agentsService.update(id, updateAgentDto)
+    return this.agentsService.update(id, updateAgentDto);
   }
 
-  @Patch(":id/location")
+  @Patch(':id/location')
   @Roles(UserRole.AGENT)
-  @ApiOperation({ summary: "Update agent location" })
-  updateLocation(@Param('id') id: string, updateLocationDto: UpdateLocationDto) {
-    return this.agentsService.updateLocation(id, updateLocationDto)
+  @ApiOperation({ summary: 'Update agent location' })
+  updateLocation(
+    @Param('id') id: string,
+    updateLocationDto: UpdateLocationDto,
+  ) {
+    return this.agentsService.updateLocation(id, updateLocationDto);
   }
 
-  @Patch(":id/status")
+  @Patch(':id/status')
   @Roles(UserRole.AGENT)
-  @ApiOperation({ summary: "Update agent status" })
+  @ApiOperation({ summary: 'Update agent status' })
   updateStatus(@Param('id') id: string, body: { status: string }) {
-    return this.agentsService.updateStatus(id, body.status)
+    return this.agentsService.updateStatus(id, body.status);
   }
 
   @Delete(':id')

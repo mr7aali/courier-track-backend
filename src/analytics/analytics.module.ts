@@ -1,11 +1,13 @@
-import { Module } from "@nestjs/common"
-import { MongooseModule } from "@nestjs/mongoose"
-import { AnalyticsService } from "./analytics.service"
-import { AnalyticsController } from "./analytics.controller"
-import { Parcel, ParcelSchema } from "../parcels/schemas/parcel.schema"
-import { Payment, PaymentSchema } from "../payments/schemas/payment.schema"
-import { User, UserSchema } from "../users/schemas/user.schema"
-import { Agent, AgentSchema } from "../agents/schemas/agent.schema"
+// import { Module } from "@nestjs/common"
+// import { MongooseModule } from "@nestjs/mongoose"
+// import { AnalyticsService } from "./analytics.service"
+// import { AnalyticsController } from "./analytics.controller"
+// import { Parcel, ParcelSchema } from "../parcels/schemas/parcel.schema"
+// import { Payment, PaymentSchema } from "../payments/schemas/payment.schema"
+// import { User, UserSchema } from "../users/schemas/user.schema"
+// import { Agent, AgentSchema } from "../agents/schemas/agent.schema"
+
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [

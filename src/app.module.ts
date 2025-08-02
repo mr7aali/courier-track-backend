@@ -1,22 +1,4 @@
 import { ConfigModule } from '@nestjs/config';
-/* eslint-disable prettier/prettier */
-// import { Module } from "@nestjs/common"
-// import { ConfigModule } from "@nestjs/config"
-// import { MongooseModule } from "@nestjs/mongoose"
-// import { ThrottlerModule } from "@nestjs/throttler"
-// import { ScheduleModule } from "@nestjs/schedule"
-// import { AuthModule } from "./auth/auth.module"
-// import { UsersModule } from "./users/users.module"
-// import { ParcelsModule } from "./parcels/parcels.module"
-// import { AgentsModule } from "./agents/agents.module"
-// import { TrackingModule } from "./tracking/tracking.module"
-// import { PaymentsModule } from "./payments/payments.module"
-// import { NotificationsModule } from "./notifications/notifications.module"
-// import { AnalyticsModule } from "./analytics/analytics.module"
-// import { SettingsModule } from "./settings/settings.module"
-// import { WebsocketModule } from "./websocket/websocket.module"
-// import { ReportsModule } from "./reports/reports.module"
-
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule } from '@nestjs/throttler';
