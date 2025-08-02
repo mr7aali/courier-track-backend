@@ -1,81 +1,84 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
-import type { Document } from "mongoose"
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
-export type UserDocument = User & Document
+export type UserDocument = User & Document;
 
 @Schema({ timestamps: true })
 export class User {
+  @Prop({ required: false })
+  _id: string;
   @Prop({ required: true })
-  name: string
+  name: string;
 
   @Prop({ required: true, unique: true })
-  email: string
+  email: string;
 
   @Prop({ required: true })
-  password: string
+  password: string;
 
   @Prop({ required: true })
-  phone: string
+  phone: string;
 
-  @Prop({ required: true, enum: ["customer", "agent", "admin"] })
-  role: string
+  @Prop({ required: true, enum: ['customer', 'agent', 'admin'] })
+  role: string;
 
-  @Prop({ default: "active", enum: ["active", "inactive", "suspended"] })
-  status: string
-
-  @Prop()
-  address: string
+  @Prop({ default: 'active', enum: ['active', 'inactive', 'suspended'] })
+  status: string;
 
   @Prop()
-  city: string
+  address: string;
 
   @Prop()
-  state: string
+  city: string;
 
   @Prop()
-  zipCode: string
+  state: string;
 
   @Prop()
-  country: string
+  zipCode: string;
 
   @Prop()
-  avatar: string
+  country: string;
+
+  @Prop()
+  avatar: string;
 
   @Prop({ default: Date.now })
-  lastLogin: Date
+  lastLogin: Date;
 
   @Prop({ default: false })
-  emailVerified: boolean
+  emailVerified: boolean;
 
   @Prop({ default: false })
-  phoneVerified: boolean
+  phoneVerified: boolean;
 
   @Prop()
-  resetPasswordToken: string
+  resetPasswordToken: string;
 
   @Prop()
-  resetPasswordExpires: Date
+  resetPasswordExpires: Date;
 
   @Prop()
-  emailVerificationToken: string
+  emailVerificationToken: string;
 
   @Prop({ type: Object })
   preferences: {
     notifications: {
-      email: boolean
-      sms: boolean
-      push: boolean
-    }
-    language: string
-    timezone: string
-  }
+      email: boolean;
+      sms: boolean;
+      push: boolean;
+    };
+    language: string;
+    timezone: string;
+  };
+  // Removed duplicate declaration of _id to resolve modifier conflict
 }
 
-export const UserSchema = SchemaFactory.createForClass(User)
+export const UserSchema = SchemaFactory.createForClass(User);
 
 // Indexes
-UserSchema.index({ email: 1 })
-UserSchema.index({ phone: 1 })
-UserSchema.index({ role: 1 })
-UserSchema.index({ status: 1 })
-UserSchema.index({ createdAt: -1 })
+UserSchema.index({ email: 1 });
+UserSchema.index({ phone: 1 });
+UserSchema.index({ role: 1 });
+UserSchema.index({ status: 1 });
+UserSchema.index({ createdAt: -1 });

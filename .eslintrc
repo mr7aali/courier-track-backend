@@ -1,0 +1,13 @@
+{
+  "env": { "node": true },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@nestjs/recommended",
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+  },
+}
