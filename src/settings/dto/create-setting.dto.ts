@@ -1,32 +1,32 @@
-import { IsString, IsEnum, IsOptional, IsBoolean } from "class-validator"
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger"
+import { IsString, IsEnum, IsOptional, IsBoolean } from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateSettingDto {
   @ApiProperty()
   @IsString()
-  key: string
+  key: string;
 
   @ApiProperty()
   @IsString()
-  value: string
+  value: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  description?: string
+  description?: string;
 
-  @ApiPropertyOptional({ enum: ["string", "number", "boolean", "json"] })
+  @ApiPropertyOptional({ enum: ['string', 'number', 'boolean', 'json'] })
   @IsOptional()
-  @IsEnum(["string", "number", "boolean", "json"])
-  type?: string
+  @IsEnum(['string', 'number', 'boolean', 'json'])
+  type?: string;
 
-  @ApiPropertyOptional({ enum: ["system", "user", "admin"] })
+  @ApiPropertyOptional({ enum: ['system', 'user', 'admin'] })
   @IsOptional()
-  @IsEnum(["system", "user", "admin"])
-  category?: string
+  @IsEnum(['system', 'user', 'admin'])
+  category?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  isPublic?: boolean
+  isPublic?: boolean;
 }

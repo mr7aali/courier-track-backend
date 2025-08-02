@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common"
-import { MongooseModule } from "@nestjs/mongoose"
-import { ReportsService } from "./reports.service"
-import { ReportsController } from "./reports.controller"
-import { Parcel, ParcelSchema } from "../parcels/schemas/parcel.schema"
-import { Payment, PaymentSchema } from "../payments/schemas/payment.schema"
-import { User, UserSchema } from "../users/schemas/user.schema"
-import { Agent, AgentSchema } from "../agents/schemas/agent.schema"
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ReportsService } from './reports.service';
+import { ReportsController } from './reports.controller';
+import { Parcel, ParcelSchema } from '../parcels/schemas/parcel.schema';
+import { Payment, PaymentSchema } from '../payments/schemas/payment.schema';
+import { User, UserSchema } from '../users/schemas/user.schema';
+import { Agent, AgentSchema } from '../agents/schemas/agent.schema';
 
 @Module({
   imports: [

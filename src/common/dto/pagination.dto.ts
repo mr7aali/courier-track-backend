@@ -1,6 +1,7 @@
-import { IsOptional, IsInt, Min, Max, IsString, IsEnum } from "class-validator"
-import { Type } from "class-transformer"
-import { ApiPropertyOptional } from "@nestjs/swagger"
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { IsOptional, IsInt, Min, Max, IsString, IsEnum } from 'class-validator';
+import { Type } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class PaginationDto {
   @ApiPropertyOptional({ default: 1 })
@@ -8,7 +9,7 @@ export class PaginationDto {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  page?: number = 1
+  page?: number = 1;
 
   @ApiPropertyOptional({ default: 10 })
   @IsOptional()
@@ -16,20 +17,20 @@ export class PaginationDto {
   @IsInt()
   @Min(1)
   @Max(100)
-  limit?: number = 10
+  limit?: number = 10;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  search?: string
+  search?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  sortBy?: string
+  sortBy?: string;
 
-  @ApiPropertyOptional({ enum: ["asc", "desc"] })
+  @ApiPropertyOptional({ enum: ['asc', 'desc'] })
   @IsOptional()
-  @IsEnum(["asc", "desc"])
-  sortOrder?: "asc" | "desc" = "desc"
+  @IsEnum(['asc', 'desc'])
+  sortOrder?: 'asc' | 'desc' = 'desc';
 }

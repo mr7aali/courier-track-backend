@@ -1,50 +1,57 @@
-import { IsEmail, IsString, IsEnum, IsOptional, MinLength, IsPhoneNumber } from "class-validator"
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger"
+import {
+  IsEmail,
+  IsString,
+  IsEnum,
+  IsOptional,
+  MinLength,
+  IsPhoneNumber,
+} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateUserDto {
   @ApiProperty()
   @IsString()
-  name: string
+  name: string;
 
   @ApiProperty()
   @IsEmail()
-  email: string
+  email: string;
 
   @ApiProperty()
   @IsString()
   @MinLength(8)
-  password: string
+  password: string;
 
   @ApiProperty()
   @IsPhoneNumber()
-  phone: string
+  phone: string;
 
-  @ApiProperty({ enum: ["customer", "agent", "admin"] })
-  @IsEnum(["customer", "agent", "admin"])
-  role: string
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  address?: string
+  @ApiProperty({ enum: ['customer', 'agent', 'admin'] })
+  @IsEnum(['customer', 'agent', 'admin'])
+  role: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  city?: string
+  address?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  state?: string
+  city?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  zipCode?: string
+  state?: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  country?: string
+  zipCode?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  country?: string;
 }

@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common"
-import { MongooseModule } from "@nestjs/mongoose"
-import { TrackingService } from "./tracking.service"
-import { TrackingController } from "./tracking.controller"
-import { Parcel, ParcelSchema } from "../parcels/schemas/parcel.schema"
-import { Agent, AgentSchema } from "../agents/schemas/agent.schema"
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { TrackingService } from './tracking.service';
+import { TrackingController } from './tracking.controller';
+import { Parcel, ParcelSchema } from '../parcels/schemas/parcel.schema';
+import { Agent, AgentSchema } from '../agents/schemas/agent.schema';
 
 @Module({
   imports: [

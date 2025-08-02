@@ -1,70 +1,96 @@
-import { IsString, IsNumber, IsEnum, IsOptional, IsBoolean, IsDateString, IsPhoneNumber } from "class-validator"
-import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger"
+import {
+  IsString,
+  IsNumber,
+  IsEnum,
+  IsOptional,
+  IsBoolean,
+  IsDateString,
+  IsPhoneNumber,
+} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateParcelDto {
   @ApiProperty()
   @IsString()
-  recipientName: string
+  recipientName: string;
 
   @ApiProperty()
   @IsPhoneNumber()
-  recipientPhone: string
+  recipientPhone: string;
 
   @ApiProperty()
   @IsString()
-  pickupAddress: string
+  pickupAddress: string;
 
   @ApiProperty()
   @IsString()
-  deliveryAddress: string
+  deliveryAddress: string;
 
-  @ApiProperty({ enum: ["small", "medium", "large", "extra_large"] })
-  @IsEnum(["small", "medium", "large", "extra_large"])
-  parcelSize: string
+  @ApiProperty({ enum: ['small', 'medium', 'large', 'extra_large'] })
+  @IsEnum(['small', 'medium', 'large', 'extra_large'])
+  parcelSize: string;
 
-  @ApiProperty({ enum: ["document", "package", "fragile", "electronics", "clothing", "food", "other"] })
-  @IsEnum(["document", "package", "fragile", "electronics", "clothing", "food", "other"])
-  parcelType: string
+  @ApiProperty({
+    enum: [
+      'document',
+      'package',
+      'fragile',
+      'electronics',
+      'clothing',
+      'food',
+      'other',
+    ],
+  })
+  @IsEnum([
+    'document',
+    'package',
+    'fragile',
+    'electronics',
+    'clothing',
+    'food',
+    'other',
+  ])
+  parcelType: string;
 
   @ApiProperty()
   @IsNumber()
-  weight: number
+  weight: number;
 
-  @ApiProperty({ enum: ["cod", "prepaid"] })
-  @IsEnum(["cod", "prepaid"])
-  paymentType: string
+  @ApiProperty({ enum: ['cod', 'prepaid'] })
+  @IsEnum(['cod', 'prepaid'])
+  paymentType: string;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
-  codAmount?: number
+  codAmount?: number;
 
   @ApiProperty()
   @IsNumber()
-  deliveryFee: number
+  deliveryFee: number;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
-  scheduledPickupDate?: Date
+  scheduledPickupDate?: Date;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
-  scheduledDeliveryDate?: Date
+  scheduledDeliveryDate?: Date;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  isFragile?: boolean
+  isFragile?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
-  requiresSignature?: boolean
+  requiresSignature?: boolean;
 
   @ApiPropertyOptional()
   @IsOptional()
   @IsString()
-  specialInstructions?: string
+  specialInstructions?: string;
 }

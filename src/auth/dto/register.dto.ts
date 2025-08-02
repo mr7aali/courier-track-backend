@@ -1,25 +1,32 @@
-import { IsEmail, IsString, IsEnum, MinLength, IsPhoneNumber } from "class-validator"
-import { ApiProperty } from "@nestjs/swagger"
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import {
+  IsEmail,
+  IsString,
+  IsEnum,
+  MinLength,
+  IsPhoneNumber,
+} from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterDto {
   @ApiProperty()
   @IsString()
-  name: string
+  name: string;
 
   @ApiProperty()
   @IsEmail()
-  email: string
+  email: string;
 
   @ApiProperty()
   @IsString()
   @MinLength(8)
-  password: string
+  password: string;
 
   @ApiProperty()
   @IsPhoneNumber()
-  phone: string
+  phone: string;
 
-  @ApiProperty({ enum: ["customer", "agent"] })
-  @IsEnum(["customer", "agent"])
-  role: string
+  @ApiProperty({ enum: ['customer', 'agent'] })
+  @IsEnum(['customer', 'agent'])
+  role: string;
 }

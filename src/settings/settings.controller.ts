@@ -1,14 +1,22 @@
-import { Controller, Get, Post, Patch, Param, Delete, UseGuards } from "@nestjs/common"
-import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
-import type { SettingsService } from "./settings.service"
-import type { CreateSettingDto } from "./dto/create-setting.dto"
-import type { UpdateSettingDto } from "./dto/update-setting.dto"
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
-import { RolesGuard } from "../common/guards/roles.guard"
-import { Roles, UserRole } from "../common/decorators/roles.decorator"
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
+import type { SettingsService } from './settings.service';
+import type { CreateSettingDto } from './dto/create-setting.dto';
+import type { UpdateSettingDto } from './dto/update-setting.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles, UserRole } from '../common/decorators/roles.decorator';
 
-@ApiTags("settings")
-@Controller("settings")
+@ApiTags('settings')
+@Controller('settings')
 export class SettingsController {
   constructor(private readonly settingsService: SettingsService) {}
 
@@ -16,21 +24,21 @@ export class SettingsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: "Create a new setting" })
+  @ApiOperation({ summary: 'Create a new setting' })
   create(createSettingDto: CreateSettingDto) {
-    return this.settingsService.create(createSettingDto)
+    return this.settingsService.create(createSettingDto);
   }
 
   @Get()
-  @ApiOperation({ summary: "Get all settings" })
+  @ApiOperation({ summary: 'Get all settings' })
   findAll(category?: string, isPublic?: boolean) {
-    return this.settingsService.findAll(category, isPublic)
+    return this.settingsService.findAll(category, isPublic);
   }
 
-  @Get("public")
-  @ApiOperation({ summary: "Get public settings" })
+  @Get('public')
+  @ApiOperation({ summary: 'Get public settings' })
   getPublicSettings() {
-    return this.settingsService.findAll(undefined, true)
+    return this.settingsService.findAll(undefined, true);
   }
 
   @Get(':key')
@@ -45,22 +53,22 @@ export class SettingsController {
     return this.settingsService.getValue(key);
   }
 
-  @Patch(":key")
+  @Patch(':key')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: "Update setting" })
+  @ApiOperation({ summary: 'Update setting' })
   update(@Param('key') key: string, updateSettingDto: UpdateSettingDto) {
-    return this.settingsService.update(key, updateSettingDto)
+    return this.settingsService.update(key, updateSettingDto);
   }
 
-  @Patch(":key/value")
+  @Patch(':key/value')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: "Update setting value" })
+  @ApiOperation({ summary: 'Update setting value' })
   setValue(@Param('key') key: string, body: { value: any }) {
-    return this.settingsService.setValue(key, body.value)
+    return this.settingsService.setValue(key, body.value);
   }
 
   @Delete(':key')

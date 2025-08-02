@@ -1,12 +1,13 @@
-import { IsEmail, IsString } from "class-validator"
-import { ApiProperty } from "@nestjs/swagger"
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+import { IsEmail, IsString } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginDto {
   @ApiProperty()
   @IsEmail()
-  email: string
+  email: string;
 
   @ApiProperty()
   @IsString()
-  password: string
+  password: string;
 }
