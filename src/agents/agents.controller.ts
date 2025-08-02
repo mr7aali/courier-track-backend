@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 // import { Controller, Get, Post, Patch, Param, Delete, Query, UseGuards, Request } from "@nestjs/common"
 // import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
 // import type { AgentsService } from "./agents.service"
@@ -69,6 +70,7 @@ export class AgentsController {
   @Roles(UserRole.AGENT)
   @ApiOperation({ summary: 'Get agent profile' })
   getProfile(@Request() req) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return this.agentsService.findByUserId(req.user.userId);
   }
 

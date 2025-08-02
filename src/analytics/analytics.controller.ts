@@ -1,22 +1,24 @@
-import { Controller, Get, Query, UseGuards } from "@nestjs/common"
-import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
-import type { AnalyticsService } from "./analytics.service"
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
-import { RolesGuard } from "../common/guards/roles.guard"
-import { Roles, UserRole } from "../common/decorators/roles.decorator"
+/* eslint-disable prettier/prettier */
 
-@ApiTags("analytics")
-@Controller("analytics")
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles, UserRole } from 'src/common/decorators/roles.decorator';
+import { AnalyticsService } from './analytics.service';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+
+@ApiTags('analytics')
+@Controller('analytics')
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.ADMIN)
 @ApiBearerAuth()
 export class AnalyticsController {
   constructor(private readonly analyticsService: AnalyticsService) {}
 
-  @Get("dashboard")
-  @ApiOperation({ summary: "Get dashboard statistics" })
+  @Get('dashboard')
+  @ApiOperation({ summary: 'Get dashboard statistics' })
   getDashboardStats() {
-    return this.analyticsService.getDashboardStats()
+    return this.analyticsService.getDashboardStats();
   }
 
   @Get('parcels')
@@ -31,10 +33,10 @@ export class AnalyticsController {
     return this.analyticsService.getRevenueAnalytics(days);
   }
 
-  @Get("agents/performance")
-  @ApiOperation({ summary: "Get agent performance analytics" })
+  @Get('agents/performance')
+  @ApiOperation({ summary: 'Get agent performance analytics' })
   getAgentPerformance() {
-    return this.analyticsService.getAgentPerformance()
+    return this.analyticsService.getAgentPerformance();
   }
 
   @Get('customers/top')
@@ -43,9 +45,9 @@ export class AnalyticsController {
     return this.analyticsService.getTopCustomers(limit);
   }
 
-  @Get("failed-deliveries")
-  @ApiOperation({ summary: "Get failed delivery analysis" })
+  @Get('failed-deliveries')
+  @ApiOperation({ summary: 'Get failed delivery analysis' })
   getFailedDeliveryAnalysis() {
-    return this.analyticsService.getFailedDeliveryAnalysis()
+    return this.analyticsService.getFailedDeliveryAnalysis();
   }
 }
