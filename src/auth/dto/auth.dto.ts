@@ -8,22 +8,26 @@ export class ILoginBody {
 
   @IsString()
   @IsNotEmpty()
-  pass: string;
+  password: string;
 }
 
 export class RegisterBodyDto {
-  @IsString()
-  @IsNotEmpty()
-  username: string;
+
 
   @IsEmail()
   @IsNotEmpty()
   @IsString()
   email: string;
 
+  @IsString()
+  name:string;
+
+  @IsString()
+  phone:string;
+  
   @IsNotEmpty()
   @IsString()
-  pass: string;
+  password: string;
 
   // @IsEnum(UserRole, { message: 'role must be Manager or user' })
   // role: UserRole;

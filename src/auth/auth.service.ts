@@ -29,13 +29,11 @@ export class AuthService {
     const { password, ...userData } = user.toObject();
     try {
       const dycrpttext = dycrypt(password);
-      if (dycrpttext !== dto.pass) {
+      if (dycrpttext !== dto.password) {
         throw new UnauthorizedException('Invalid credentials');
       }
     } catch (error: unknown) {
-      // if (error instanceof Error) {
-      //   handleMongoErrors(error, `Error login: ${error.message}`);
-      // }
+     
       throw new UnauthorizedException('Unknown error occurred while log in');
     }
     const accessToken = await this.signToken(
@@ -45,35 +43,60 @@ export class AuthService {
     );
 
     return res.json({
-      data: userData,
-      token: accessToken,
+      success: true,
+      message: 'Login successful',
+      data: {
+        user: userData,
+        token: accessToken.access_token,
+      },
     });
   }
 
   // Register Function
-  async register(dto: RegisterBodyDto) {
+  async register(dto: RegisterBodyDto, res: Response) {
     try {
-      // console.log(await encryptPassword(dto.pass));
-      const encrypt = await encryptPassword(dto.pass);
+      // Check if user already exists
+      const existingUser = await this.userModel.findOne({ email: dto.email });
+      if (existingUser) {
+        throw new Error('User with this email already exists');
+      }
+
+      const encrypt = await encryptPassword(dto.password);
       const hash = encrypt.iv + ':' + encrypt.key + ':' + encrypt.encryptedText;
-      const user = new this.userModel({
-        username: dto.username,
+      
+      const user = new this.userModel({        
+        name: dto.name,
         email: dto.email,
+        phone: dto.phone,
         role: dto.role,
         password: hash,
+        status: 'active',
       });
-      // console.log('indside', user);
+      
       await user.save();
 
-      return {
-        id: user._id,
-        // username: user.username,
-        email: user.email,
-      };
+      // Generate JWT token
+      const accessToken = await this.signToken(
+        user._id.toString(),
+        user.email,
+        user.role,
+      );
+
+      // Return user data without password
+      const { password, ...userData } = user.toObject();
+
+      return res.json({
+        success: true,
+        message: 'User registered successfully',
+        data: {
+          user: userData,
+          token: accessToken.access_token,
+        },
+      });
     } catch (error: unknown) {
-      // if (error instanceof Error) {
-      //   handleMongoErrors(error);
-      // }
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
       throw new Error('Unknown error occurred while registering user');
     }
   }
