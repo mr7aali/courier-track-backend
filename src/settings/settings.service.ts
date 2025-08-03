@@ -2,13 +2,17 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import type { Model } from 'mongoose';
-import type { Setting, SettingDocument } from './schemas/setting.schema';
+import { Setting, SettingDocument } from './schemas/setting.schema';
 import type { CreateSettingDto } from './dto/create-setting.dto';
 import type { UpdateSettingDto } from './dto/update-setting.dto';
 
+import { InjectModel } from '@nestjs/mongoose';
+
 @Injectable()
 export class SettingsService {
-  constructor(private settingModel: Model<SettingDocument>) {
+
+
+  constructor( @InjectModel(Setting.name) private settingModel: Model<SettingDocument>,) {
     this.initializeDefaultSettings();
   }
 

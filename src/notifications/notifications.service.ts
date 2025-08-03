@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
 import { type Model, Types } from 'mongoose';
-import type {
+import {
   Notification,
   NotificationDocument,
 } from './schemas/notification.schema';
@@ -12,13 +12,16 @@ import type { CreateNotificationDto } from './dto/create-notification.dto';
 import type { PaginationDto } from '../common/dto/pagination.dto';
 import * as nodemailer from 'nodemailer';
 import { Twilio } from 'twilio';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class NotificationsService {
   private emailTransporter: nodemailer.Transporter;
   private twilioClient: Twilio;
+// @InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>
+// private notificationModel: Model<NotificationDocument>
 
-  constructor(private notificationModel: Model<NotificationDocument>) {
+  constructor(@InjectModel(Notification.name) private notificationModel: Model<NotificationDocument>) {
     // Email configuration
     this.emailTransporter = nodemailer.createTransporter({
       host: process.env.SMTP_HOST,

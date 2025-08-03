@@ -10,26 +10,33 @@ import type { Model } from 'mongoose';
 // import { Agent } from "../agents/schemas/agent.schema"
 
 import { Injectable } from '@nestjs/common';
-import { Parcel } from 'src/parcels/schemas/parcel.schema';
-import { User } from 'src/users/schemas/user.schema';
-import { Payment } from 'src/payments/schemas/payment.schema';
+import { Parcel, ParcelDocument } from 'src/parcels/schemas/parcel.schema';
+import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { Payment, PaymentDocument } from 'src/payments/schemas/payment.schema';
 import { Agent } from 'http';
+import { InjectModel } from '@nestjs/mongoose';
 // import { Model } from 'mongoose';
 
 @Injectable()
 export class AnalyticsService {
-  private parcelModel: Model<any>;
-  private paymentModel: Model<any>;
-  private userModel: Model<any>;
-  private agentModel: Model<any>;
+  // private parcelModel: Model<any>;
+  // private paymentModel: Model<any>;
+  // private userModel: Model<any>;
+  // private agentModel: Model<any>;
 
-  constructor(modelFactory: any) {
-    this.parcelModel = modelFactory(Parcel.name);
-    this.paymentModel = modelFactory(Payment.name);
-    this.userModel = modelFactory(User.name);
-    this.agentModel = modelFactory(Agent.name);
-  }
+  // constructor(modelFactory: any) {
+  //   this.parcelModel = modelFactory(Parcel.name);
+  //   this.paymentModel = modelFactory(Payment.name);
+  //   this.userModel = modelFactory(User.name);
+  //   this.agentModel = modelFactory(Agent.name);
+  // }
+constructor(
+  @InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>,
+  @InjectModel(Payment.name) private paymentModel: Model<PaymentDocument>,
+  @InjectModel(Parcel.name) private userModel: Model<ParcelDocument>,
+  @InjectModel(User.name) private agentModel: Model<UserDocument>,
 
+) {}
   async getDashboardStats() {
     const today = new Date();
     const startOfDay = new Date(today.setHours(0, 0, 0, 0));

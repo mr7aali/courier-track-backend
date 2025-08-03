@@ -4,33 +4,40 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Injectable } from '@nestjs/common';
 import type { Model } from 'mongoose';
-import type { ParcelDocument } from '../parcels/schemas/parcel.schema';
-import type { PaymentDocument } from '../payments/schemas/payment.schema';
-import type { UserDocument } from '../users/schemas/user.schema';
+import { Parcel, type ParcelDocument } from '../parcels/schemas/parcel.schema';
+import { Payment, type PaymentDocument } from '../payments/schemas/payment.schema';
+import { User, type UserDocument } from '../users/schemas/user.schema';
 import type { AgentDocument } from '../agents/schemas/agent.schema';
 import * as csvWriter from 'csv-writer';
 import * as PDFDocument from 'pdfkit';
 import type { Response } from 'express';
+import { InjectModel } from '@nestjs/mongoose';
+import { Agent } from 'http';
 
 @Injectable()
 export class ReportsService {
-  private parcelModel: Model<ParcelDocument>;
-  private paymentModel: Model<PaymentDocument>;
-  private userModel: Model<UserDocument>;
-  private agentModel: Model<AgentDocument>;
+  // private parcelModel: Model<ParcelDocument>;
+  // private paymentModel: Model<PaymentDocument>;
+  // private userModel: Model<UserDocument>;
+  // private agentModel: Model<AgentDocument>;
 
-  constructor(
-    parcelModel: Model<ParcelDocument>,
-    paymentModel: Model<PaymentDocument>,
-    userModel: Model<UserDocument>,
-    agentModel: Model<AgentDocument>,
-  ) {
-    this.parcelModel = parcelModel;
-    this.paymentModel = paymentModel;
-    this.userModel = userModel;
-    this.agentModel = agentModel;
-  }
-
+  // constructor(
+  //   parcelModel: Model<ParcelDocument>,
+  //   paymentModel: Model<PaymentDocument>,
+  //   userModel: Model<UserDocument>,
+  //   agentModel: Model<AgentDocument>,
+  // ) {
+  //   this.parcelModel = parcelModel;
+  //   this.paymentModel = paymentModel;
+  //   this.userModel = userModel;
+  //   this.agentModel = agentModel;
+  // }
+constructor(
+    @InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>,
+    @InjectModel(Payment.name) private paymentModel: Model<PaymentDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectModel(Agent.name) private agentModel: Model<AgentDocument>,
+  ) {}
   async generateParcelReport(
     startDate: Date,
     endDate: Date,

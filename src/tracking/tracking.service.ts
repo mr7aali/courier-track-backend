@@ -2,22 +2,25 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
 import type { Model } from 'mongoose';
-import type { ParcelDocument } from '../parcels/schemas/parcel.schema';
-import type { AgentDocument } from '../agents/schemas/agent.schema';
+import { Parcel, type ParcelDocument } from '../parcels/schemas/parcel.schema';
+import { Agent, type AgentDocument } from '../agents/schemas/agent.schema';
+import { InjectModel } from '@nestjs/mongoose';
+// import { Agent } from 'http';
 
 @Injectable()
 export class TrackingService {
-  private parcelModel: Model<ParcelDocument>;
-  private agentModel: Model<AgentDocument>;
+  // private parcelModel: Model<>;
+  // private agentModel: Model<AgentDocument>;
 
-  constructor(
-    parcelModel: Model<ParcelDocument>,
-    agentModel: Model<AgentDocument>,
-  ) {
-    this.parcelModel = parcelModel;
-    this.agentModel = agentModel;
-  }
-
+  // constructor(
+  //   parcelModel: Model<ParcelDocument>,
+  //   agentModel: Model<AgentDocument>,
+  // ) {
+  //   this.parcelModel = parcelModel;
+  //   this.agentModel = agentModel;
+  // }
+constructor(@InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>,
+@InjectModel(Agent.name) private agentModel: Model<AgentDocument>) {}
   async getParcelLocation(trackingId: string) {
     const parcel = await this.parcelModel
       .findOne({ trackingId })
