@@ -99,7 +99,7 @@ The API documentation is automatically generated using Swagger/OpenAPI and is av
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/mr7aali/courier-track-backend.git
    cd courier-track-backend
    ```
 
