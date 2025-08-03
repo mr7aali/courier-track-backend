@@ -10,14 +10,12 @@ import { CreateAgentDto } from './dto/create-agent.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { UpdateAgentDto } from './dto/update-agent.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class AgentsService {
-  private agentModel: Model<AgentDocument>;
-
-  constructor(agentModel: Model<AgentDocument>) {
-    this.agentModel = agentModel;
-  }
+  
+  constructor(@InjectModel(Agent.name) private agentModel: Model<AgentDocument>) {}
 
   async create(createAgentDto: CreateAgentDto): Promise<Agent> {
     const agent = new this.agentModel({

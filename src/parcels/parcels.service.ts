@@ -19,11 +19,7 @@ import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ParcelsService {
-  // private parcelModel: Model<ParcelDocument>;
-
-  // constructor(model: Model<ParcelDocument>) {
-  //   this.parcelModel = model;
-  // }
+ 
 constructor(@InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>) {}
   async create(
     createParcelDto: CreateParcelDto,
