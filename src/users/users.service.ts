@@ -5,19 +5,17 @@ import {
 } from '@nestjs/common';
 import type { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import type { User, UserDocument } from './schemas/user.schema';
+import { User, UserDocument } from './schemas/user.schema';
 import type { CreateUserDto } from './dto/create-user.dto';
 import type { UpdateUserDto } from './dto/update-user.dto';
 import type { PaginationDto } from '../common/dto/pagination.dto';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UsersService {
-  private userModel: Model<UserDocument>;
-
-  constructor(userModel: Model<UserDocument>) {
-    this.userModel = userModel;
-  }
-
+  
+  
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     const existingUser = await this.userModel.findOne({
       $or: [{ email: createUserDto.email }, { phone: createUserDto.phone }],

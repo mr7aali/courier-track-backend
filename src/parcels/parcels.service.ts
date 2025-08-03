@@ -9,21 +9,22 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { type Model, Types } from 'mongoose';
-import type { Parcel, ParcelDocument } from './schemas/parcel.schema';
+import { Parcel, ParcelDocument } from './schemas/parcel.schema';
 import type { CreateParcelDto } from './dto/create-parcel.dto';
 import type { UpdateParcelDto } from './dto/update-parcel.dto';
 import type { UpdateStatusDto } from './dto/update-status.dto';
 import type { PaginationDto } from '../common/dto/pagination.dto';
 import * as QRCode from 'qrcode';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ParcelsService {
-  private parcelModel: Model<ParcelDocument>;
+  // private parcelModel: Model<ParcelDocument>;
 
-  constructor(model: Model<ParcelDocument>) {
-    this.parcelModel = model;
-  }
-
+  // constructor(model: Model<ParcelDocument>) {
+  //   this.parcelModel = model;
+  // }
+constructor(@InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>) {}
   async create(
     createParcelDto: CreateParcelDto,
     customerId: string,
