@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Param, Patch, UseGuards, Request } from "@nestjs/common"
 import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
-import type { PaymentsService } from "./payments.service"
-import type { CreatePaymentDto } from "./dto/create-payment.dto"
-import type { PaginationDto } from "../common/dto/pagination.dto"
-import { JwtAuthGuard } from "src/auth/guard/jwt-auth.guard"
+import { PaymentsService } from "./payments.service"
+import { CreatePaymentDto } from "./dto/create-payment.dto"
+import { PaginationDto } from "../common/dto/pagination.dto"
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard"
 import { RolesGuard } from "../common/guards/roles.guard"
 import { Roles, UserRole } from "../common/decorators/roles.decorator"
 

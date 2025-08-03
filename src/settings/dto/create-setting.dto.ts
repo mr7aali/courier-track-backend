@@ -20,9 +20,9 @@ export class CreateSettingDto {
   @IsEnum(['string', 'number', 'boolean', 'json'])
   type?: string;
 
-  @ApiPropertyOptional({ enum: ['system', 'user', 'admin'] })
+  @ApiPropertyOptional({ enum: ['system', 'user', 'admin', 'pricing'] })
   @IsOptional()
-  @IsEnum(['system', 'user', 'admin'])
+  @IsEnum(['system', 'user', 'admin', 'pricing'])
   category?: string;
 
   @ApiPropertyOptional()

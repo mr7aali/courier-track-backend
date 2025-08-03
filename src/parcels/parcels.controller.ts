@@ -11,12 +11,12 @@ import {
   Request,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
-import type { ParcelsService } from './parcels.service';
-import type { CreateParcelDto } from './dto/create-parcel.dto';
-import type { UpdateParcelDto } from './dto/update-parcel.dto';
-import type { UpdateStatusDto } from './dto/update-status.dto';
-import type { PaginationDto } from '../common/dto/pagination.dto';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { ParcelsService } from './parcels.service';
+import { CreateParcelDto } from './dto/create-parcel.dto';
+import { UpdateParcelDto } from './dto/update-parcel.dto';
+import { UpdateStatusDto } from './dto/update-status.dto';
+import { PaginationDto } from '../common/dto/pagination.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles, UserRole } from '../common/decorators/roles.decorator';
 

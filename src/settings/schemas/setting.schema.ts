@@ -17,7 +17,7 @@ export class Setting {
   @Prop({ default: "string", enum: ["string", "number", "boolean", "json"] })
   type: string
 
-  @Prop({ default: "system", enum: ["system", "user", "admin"] })
+  @Prop({ default: "system", enum: ["system", "user", "admin", "pricing"] })
   category: string
 
   @Prop({ default: false })

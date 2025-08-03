@@ -15,6 +15,7 @@ import { SettingsModule } from './settings/settings.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { ReportsModule } from './reports/reports.module';
 import { DatabaseModule } from './database/database.module';
+import { GuardsModule } from './common/guards/guards.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { DatabaseModule } from './database/database.module';
       },
     ]),
     ScheduleModule.forRoot(),
+    GuardsModule,
     AuthModule,
     UsersModule,
     ParcelsModule,

@@ -27,7 +27,6 @@ private readonly configService: ConfigService
       port: Number.parseInt(  this.configService.get<string>("SMTP_PORT") || '587'),
       secure: false,
       auth: {
-        
         user: this.configService.get<string>("SMTP_USER"),
         pass:  this.configService.get<string>("SMTP_PASS"),
         

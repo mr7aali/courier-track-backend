@@ -1,8 +1,8 @@
 import { Controller, Get, Res, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import type { Response } from 'express';
-import type { ReportsService } from './reports.service';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { ReportsService } from './reports.service';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles, UserRole } from '../common/decorators/roles.decorator';
 
