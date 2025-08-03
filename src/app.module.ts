@@ -14,15 +14,17 @@ import { AnalyticsModule } from './analytics/analytics.module';
 import { SettingsModule } from './settings/settings.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { ReportsModule } from './reports/reports.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(
-      process.env.MONGODB_URI || 'mongodb://localhost:27017/courier-db',
-    ),
+    // MongooseModule.forRoot(
+    //   process.env.MONGODB_URI || 'mongodb://localhost:27017/courier-db',
+    // ),
+    DatabaseModule,
     ThrottlerModule.forRoot([
       {
         ttl: 60000,

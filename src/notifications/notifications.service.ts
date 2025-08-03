@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { Injectable } from '@nestjs/common';
 import { type Model, Types } from 'mongoose';
 import {
@@ -13,30 +10,34 @@ import type { PaginationDto } from '../common/dto/pagination.dto';
 import * as nodemailer from 'nodemailer';
 import { Twilio } from 'twilio';
 import { InjectModel } from '@nestjs/mongoose';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class NotificationsService {
-  private emailTransporter: nodemailer.Transporter;
+  private emailTransporter: nodemailer.createTransport;
   private twilioClient: Twilio;
-// @InjectModel(Parcel.name) private parcelModel: Model<ParcelDocument>
-// private notificationModel: Model<NotificationDocument>
 
-  constructor(@InjectModel(Notification.name) private notificationModel: Model<NotificationDocument>) {
+
+  constructor(@InjectModel(Notification.name) private notificationModel: Model<NotificationDocument>,
+private readonly configService: ConfigService
+) {
     // Email configuration
-    this.emailTransporter = nodemailer.createTransporter({
-      host: process.env.SMTP_HOST,
-      port: Number.parseInt(process.env.SMTP_PORT || '587'),
+    this.emailTransporter = nodemailer.createTransport({
+      host: this.configService.get<string>("SMTP_HOST"),
+      port: Number.parseInt(  this.configService.get<string>("SMTP_PORT") || '587'),
       secure: false,
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        
+        user: this.configService.get<string>("SMTP_USER"),
+        pass:  this.configService.get<string>("SMTP_PASS"),
+        
       },
     });
 
     // SMS configuration
     this.twilioClient = new Twilio(
-      process.env.TWILIO_ACCOUNT_SID,
-      process.env.TWILIO_AUTH_TOKEN,
+      this.configService.get<string>("TWILIO_ACCOUNT_SID"),
+      this.configService.get<string>("TWILIO_AUTH_TOKEN"),
     );
   }
 
@@ -87,7 +88,7 @@ export class NotificationsService {
     const user = await notification.populate('userId', 'email name');
 
     await this.emailTransporter.sendMail({
-      from: process.env.FROM_EMAIL,
+      from: this.configService.get<string>("FROM_EMAIL"),
       to: (user.userId as any).email,
       subject: notification.title,
       html: notification.message,
@@ -99,7 +100,7 @@ export class NotificationsService {
 
     await this.twilioClient.messages.create({
       body: `${notification.title}: ${notification.message}`,
-      from: process.env.TWILIO_PHONE_NUMBER,
+      from: this.configService.get<string>("TWILIO_PHONE_NUMBER"),
       to: (user.userId as any).phone,
     });
   }

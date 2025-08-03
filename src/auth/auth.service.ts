@@ -1,69 +1,97 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import type { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcryptjs';
-import type { UsersService } from '../users/users.service';
-import type { LoginDto } from './dto/login.dto';
-import type { RegisterDto } from './dto/register.dto';
+import { ILoginBody, RegisterBodyDto } from './dto';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+// import { UserRole, Users } from '../schema/users';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { dycrypt, encryptPassword } from './encrypt';
+// import { handleMongoErrors } from 'src/utils/error.handle';
+import { Response } from 'express';
+import { User } from 'src/users/schemas/user.schema';
 
 @Injectable()
 export class AuthService {
-
-
-
   constructor(
-    private usersService: UsersService,
-    private jwtService: JwtService,
+    @InjectModel(User.name) private userModel: Model<User>,
+    private jwt: JwtService,
+    private config: ConfigService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.usersService.findByEmail(email);
-    if (user && (await bcrypt.compare(password, user.password))) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
-  }
-
-  async login(loginDto: LoginDto) {
-    const user = await this.validateUser(loginDto.email, loginDto.password);
+  // Login Function
+  async login(dto: ILoginBody, res: Response) {
+    const user = await this.userModel
+      .findOne({ email: dto.email })
+      .select('+password');
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw new Error('Invalid credentials');
     }
+    const { password, ...userData } = user.toObject();
+    try {
+      const dycrpttext = dycrypt(password);
+      if (dycrpttext !== dto.pass) {
+        throw new UnauthorizedException('Invalid credentials');
+      }
+    } catch (error: unknown) {
+      // if (error instanceof Error) {
+      //   handleMongoErrors(error, `Error login: ${error.message}`);
+      // }
+      throw new UnauthorizedException('Unknown error occurred while log in');
+    }
+    const accessToken = await this.signToken(
+      user._id.toString(),
+      user.email,
+      user.role,
+    );
 
-    await this.usersService.updateLastLogin(user._id);
-
-    const payload = { email: user.email, sub: user.id, role: user.role };
-    return {
-      access_token: this.jwtService.sign(payload),
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        status: user.status,
-      },
-    };
+    return res.json({
+      data: userData,
+      token: accessToken,
+    });
   }
 
-  async register(registerDto: RegisterDto) {
-    const user = await this.usersService.create(registerDto);
-    const { password, ...result } = user;
+  // Register Function
+  async register(dto: RegisterBodyDto) {
+    try {
+      // console.log(await encryptPassword(dto.pass));
+      const encrypt = await encryptPassword(dto.pass);
+      const hash = encrypt.iv + ':' + encrypt.key + ':' + encrypt.encryptedText;
+      const user = new this.userModel({
+        username: dto.username,
+        email: dto.email,
+        role: dto.role,
+        password: hash,
+      });
+      // console.log('indside', user);
+      await user.save();
 
-    const payload = { email: user.email, sub: user._id, role: user.role };
-    return {
-      access_token: this.jwtService.sign(payload),
-      user: {
+      return {
         id: user._id,
-        name: user.name,
+        // username: user.username,
         email: user.email,
-        role: user.role,
-        status: user.status,
-      },
+      };
+    } catch (error: unknown) {
+      // if (error instanceof Error) {
+      //   handleMongoErrors(error);
+      // }
+      throw new Error('Unknown error occurred while registering user');
+    }
+  }
+
+  // Sign JWT Token
+  async signToken(
+    id: string,
+    email: string,
+    role: string,
+  ): Promise<{ access_token: string }> {
+    const payload = { sub: id, email, role };
+    const token = await this.jwt.signAsync(payload, {
+      secret: this.config.get<string>('JWT_SECRET'),
+      expiresIn: '1h',
+    });
+
+    return {
+      access_token: token,
     };
   }
 }

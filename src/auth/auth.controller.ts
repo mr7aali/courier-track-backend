@@ -1,25 +1,18 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
-import type { AuthService } from './auth.service';
-import type { LoginDto } from './dto/login.dto';
-import type { RegisterDto } from './dto/register.dto';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-
-@ApiTags('auth')
+import { Body, Controller, Post, Res } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { ILoginBody, RegisterBodyDto } from './dto';
+import type { Response } from 'express';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
-  @Post('login')
-  @UseGuards(LocalAuthGuard)
-  @ApiOperation({ summary: 'User login' })
-  async login(loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+  @Post('/login')
+  login(@Body() dto: ILoginBody, @Res() res: Response) {
+    return this.authService.login(dto, res);
   }
-
-  @Post('register')
-  @ApiOperation({ summary: 'User registration' })
-  async register(registerDto: RegisterDto) {
-    return this.authService.register(registerDto);
+  @Post('/register')
+  register(@Body() dto: RegisterBodyDto) {
+    // console.log(dto);
+    return this.authService.register(dto);
   }
 }

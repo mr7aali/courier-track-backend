@@ -6,7 +6,7 @@
 // import type { UpdateAgentDto } from "./dto/update-agent.dto"
 // import type { UpdateLocationDto } from "./dto/update-location.dto"
 // import type { PaginationDto } from "../common/dto/pagination.dto"
-// import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
+// import { JwtAuthGuard } from "src/auth/guard/jwt-auth.guard"
 // import { RolesGuard } from "../common/guards/roles.guard"
 
 import {
@@ -21,7 +21,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+// import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { AgentsService } from './agents.service';
 import { Roles, UserRole } from 'src/common/decorators/roles.decorator';
@@ -29,6 +29,7 @@ import { CreateAgentDto } from './dto/create-agent.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { UpdateAgentDto } from './dto/update-agent.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 // import { Roles, UserRole } from "../common/decorators/roles.decorator"
 @ApiTags('agents')

@@ -16,7 +16,7 @@ import type { CreateParcelDto } from './dto/create-parcel.dto';
 import type { UpdateParcelDto } from './dto/update-parcel.dto';
 import type { UpdateStatusDto } from './dto/update-status.dto';
 import type { PaginationDto } from '../common/dto/pagination.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles, UserRole } from '../common/decorators/roles.decorator';
 

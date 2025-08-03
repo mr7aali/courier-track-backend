@@ -3,7 +3,7 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from "@nestjs/swagger"
 import type { PaymentsService } from "./payments.service"
 import type { CreatePaymentDto } from "./dto/create-payment.dto"
 import type { PaginationDto } from "../common/dto/pagination.dto"
-import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard"
+import { JwtAuthGuard } from "src/auth/guard/jwt-auth.guard"
 import { RolesGuard } from "../common/guards/roles.guard"
 import { Roles, UserRole } from "../common/decorators/roles.decorator"
 
