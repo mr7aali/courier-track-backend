@@ -64,7 +64,7 @@ export class AuthService {
       const encrypt = await encryptPassword(dto.password);
       const hash = encrypt.iv + ':' + encrypt.key + ':' + encrypt.encryptedText;
       
-      const user = new this.userModel({        
+      const user = await this.userModel.create({                
         name: dto.name,
         email: dto.email,
         phone: dto.phone,
@@ -73,7 +73,7 @@ export class AuthService {
         status: 'active',
       });
       
-      await user.save();
+      // await user.save();
 
       // Generate JWT token
       const accessToken = await this.signToken(
@@ -95,6 +95,7 @@ export class AuthService {
       });
     } catch (error: unknown) {
       if (error instanceof Error) {
+        console.log(error)
         throw new Error(error.message);
       }
       throw new Error('Unknown error occurred while registering user');
